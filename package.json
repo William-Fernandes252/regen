@@ -1,0 +1,50 @@
+{
+	"name": "@williamfernandes/regen",
+	"version": "0.1.0",
+	"description": "Generate the skeleton (service, repository and factory) for an application resource.",
+	"main": "index.ts",
+	"type": "module",
+	"bin": {
+		"regen": "./dist/src/index.js"
+	},
+	"scripts": {
+		"build": "tsc",
+		"start": "NODE_ENV=dev NODE_OPTIONS='$NODE_OPTIONS --experimental-vm-modules' tsx src/index.ts",
+		"check": "biome check --apply-unsafe .",
+		"format": "biome format .",
+		"check:ci": "biome ci .",
+		"test:unit": "NODE_OPTIONS='$NODE_OPTIONS --experimental-vm-modules' UNIT=true npx jest --runInBand",
+		"test:cov": "NODE_OPTIONS='$NODE_OPTIONS --experimental-vm-modules' UNIT=true npx jest --coverage",
+		"test:watch": "NODE_OPTIONS='$NODE_OPTIONS --experimental-vm-modules' UNIT=true npx jest --runInBand --watchAll",
+		"test:integration": "NODE_OPTIONS='$NODE_OPTIONS --experimental-vm-modules' INTEGRATION=true npx jest --runInBand",
+		"test:ci": "NODE_OPTIONS='$NODE_OPTIONS --experimental-vm-modules' UNIT=true INTEGRATION=true npx jest --runInBand --ci",
+		"prepare": "husky"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/William-Fernandes252/regen.git"
+	},
+	"keywords": ["cli", "code", "productivity"],
+	"author": "williamfernandes",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/William-Fernandes252/regen/issues"
+	},
+	"homepage": "https://github.com/William-Fernandes252/regen#readme",
+	"devDependencies": {
+		"@biomejs/biome": "1.7.3",
+		"@jest/globals": "29.7.0",
+		"@types/jest": "^29.5.12",
+		"@types/node": "20.12.12",
+		"@types/yargs": "^17.0.32",
+		"husky": "^9.0.11",
+		"jest": "29.7.0",
+		"ts-jest": "29.1.2",
+		"ts-node": "^10.9.2",
+		"tsx": "^4.10.4",
+		"typescript": "5.4.5"
+	},
+	"dependencies": {
+		"yargs": "^17.7.2"
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"name": "@williamfernandes/regen-mock",
+	"version": "0.1.0",
+	"description": "Generate the skeleton (service, repository and factory) for an application resource.",
+	"main": "index.ts",
+	"type": "module",
+	"keywords": ["tests"],
+	"author": "williamfernandes",
+	"license": "MIT"
+}
