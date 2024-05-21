@@ -38,6 +38,7 @@ jobs:
           pnpm install
 
       - name: Check for lint errors
+        if: matrix.os != 'windows-latest'
         run: |
           pnpm run check:ci
 
