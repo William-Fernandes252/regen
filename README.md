@@ -1,6 +1,8 @@
 # Regen
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/William-Fernandes252/regen/LICENSE)
+[![npm version](https://img.shields.io/npm/v/@williamferandes/regen?style=flat)](https://www.npmjs.com/package/@williamfernandes/regen)
+[![CI status](https://github.com/William-Fernandes252/regen/actions/workflows/dev.yml/badge.svg)](https://github.com/William-Fernandes252/regen/actions/workflows/dev.yml)
 [![Codecov](https://codecov.io/gh/William-Fernandes252/regen/graph/badge.svg?token=KF55A7SKBC)](https://codecov.io/gh/William-Fernandes252/regen)
 
 Generate the skeleton (service, repository and factory) for an application resource.
