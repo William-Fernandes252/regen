@@ -29,7 +29,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-versions }}
-          cache: "npm"
       - uses: pnpm/action-setup@v3
 
       - name: Install dependencies
