@@ -9,4 +9,3 @@ interface Component {
 	filename: string;
 	template: string;
 }
-
