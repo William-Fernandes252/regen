@@ -8,7 +8,7 @@
 			"@/*": ["src/*"],
 			"@test/*": ["__tests__/*"]
 		},
-		"types": ["jest"],
+		"types": ["jest", "node"],
 		"typeRoots": ["src/types", "node_modules/@types"],
 		"resolveJsonModule": true,
 		"esModuleInterop": true,
