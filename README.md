@@ -76,6 +76,14 @@ export default class ProductFactory {
 
 In order to use `regen`, you need to have Node.js (`>=20`) installed on your machine.
 
+## Installation
+
+If you want to install `regen` as a development dependency to a project, `cd` into the project and run
+
+```bash
+npm install -D @williamfernandes/regen
+```
+
 ## Usage
 
 ### `regen scaffold`
