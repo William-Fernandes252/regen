@@ -1,30 +1,55 @@
-import { capitalize, uncapitalize } from "@/utils/strings";
+import { template } from "@/utils/tags";
 
-const resourceAnchor = "$$resource";
+function body(resource: string) {
+	return template`import ${{
+		value: resource,
+		casing: "pascal",
+	}}Repository from "../repository/${{
+		value: resource,
+		casing: "kebab",
+	}}.repository";
 
-const template = `
-import ${resourceAnchor}Repository from "../repository/${resourceAnchor}|lower.repository";
-
-export default class ${resourceAnchor}Service {
-	constructor(private readonly ${resourceAnchor}|lowerRepository: ${resourceAnchor}Repository) {}
+export default class ${{ value: resource, casing: "pascal" }}Service {
+	constructor(private readonly ${{
+		value: resource,
+		casing: "camel",
+	}}Repository: ${{
+		value: resource,
+		casing: "pascal",
+	}}Repository) {}
 
 	async create(data: any) {
-		return this.${resourceAnchor}|lowerRepository.create(data);
+		return this.${{ value: resource, casing: "camel" }}Repository.create(data);
 	}
 
 	async update(id: number, data: any) {
-		return this.${resourceAnchor}|lowerRepository.update(id, data);
+		return this.${{ value: resource, casing: "camel" }}Repository.update(id, data);
 	}
 
 	async delete(id: number) {
-		return this.${resourceAnchor}|lowerRepository.delete(id);
+		return this.${{ value: resource, casing: "camel" }}Repository.delete(id);
 	}
 
 	async read(id: number) {
-		return this.${resourceAnchor}|lowerRepository.read(id);
+		return this.${{ value: resource, casing: "camel" }}Repository.read(id);
 	}
 }
 `;
+}
+
+function filename(resource: string, casing: "kebab" | "snake" = "kebab") {
+	return template`${{
+		value: resource,
+		casing: casing,
+	}}.service.ts`;
+}
+
+function name(resource: string) {
+	return template`${{
+		value: resource,
+		casing: "pascal",
+	}}Service`;
+}
 
 /**
  * Generates a service component for a resource.
@@ -32,12 +57,10 @@ export default class ${resourceAnchor}Service {
  * @param resource The name of the resource.
  * @returns The service component.
  */
-export function generateService(resource: string): Component {
+export function component(resource: string): Component {
 	return {
-		class: `${capitalize(resource)}Service`,
-		filename: `${resource}.service.ts`,
-		template: template
-			.replaceAll(`${resourceAnchor}|lower`, uncapitalize(resource))
-			.replaceAll(resourceAnchor, `${capitalize(resource)}`),
+		name: name(resource),
+		filename: filename(resource),
+		body: body(resource),
 	};
 }

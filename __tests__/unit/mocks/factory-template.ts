@@ -1,5 +1,4 @@
-export default `
-import ProductRepository from "../repository/product.repository";
+export default `import ProductRepository from "../repository/product.repository";
 import ProductService from "../service/product.service";
 
 export default class ProductFactory {

@@ -1,9 +1,7 @@
-import { capitalize } from "@/utils/strings";
+import { template } from "@/utils/tags";
 
-const resourceAnchor = "$$resource";
-
-const template = `
-export default class ${resourceAnchor}Repository {
+function body(resource: string) {
+	return template`export default class ${{ value: resource, casing: "pascal" }}Repository {
 	constructor() {}
 
 	async create(data: any) {
@@ -23,6 +21,15 @@ export default class ${resourceAnchor}Repository {
 	}
 }
 `;
+}
+
+function filename(resource: string, casing: Casing = "kebab") {
+	return template`${{ value: resource, casing: casing }}.repository.ts`;
+}
+
+function name(resource: string) {
+	return template`${{ value: resource, casing: "pascal" }}Repository`;
+}
 
 /**
  * Generates a repository component for a resource.
@@ -30,10 +37,10 @@ export default class ${resourceAnchor}Repository {
  * @param resource The name of the resource.
  * @returns The repository component.
  */
-export function generateRepository(resource: string): Component {
+export function component(resource: string): Component {
 	return {
-		class: `${capitalize(resource)}Repository`,
-		filename: `${resource}.repository.ts`,
-		template: template.replaceAll(resourceAnchor, capitalize(resource)),
+		name: name(resource),
+		filename: filename(resource),
+		body: body(resource),
 	};
 }

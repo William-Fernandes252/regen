@@ -1,9 +1,9 @@
-import { generateFactory } from "./factory";
-import { generateRepository } from "./repository";
-import { generateService } from "./service";
+import { component as factory } from "./factory";
+import { component as repository } from "./repository";
+import { component as service } from "./service";
 
-export default new Map<string, (resource: string) => Component>([
-	["repository", generateRepository],
-	["service", generateService],
-	["factory", generateFactory],
+export default new Map([
+	["factory", factory],
+	["repository", repository],
+	["service", service],
 ]);

@@ -5,7 +5,16 @@
  * @property {string} template - The template of the component.
  */
 interface Component {
-	class: string;
+	name: string;
 	filename: string;
-	template: string;
+	body: string;
 }
+
+type Casing = "camel" | "pascal" | "kebab" | "snake" | "upper" | "lower";
+
+type Value = object | string | number | boolean | null | undefined;
+
+type Placeholder = {
+	value: Value;
+	casing?: Casing;
+};

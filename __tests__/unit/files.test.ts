@@ -10,8 +10,8 @@ describe("Files structure", () => {
 			templates.set(
 				key,
 				jest.fn().mockReturnValue({
-					class: "",
-					template: "",
+					name: "",
+					body: "",
 					filename: "",
 				}),
 			);

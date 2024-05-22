@@ -1,5 +1,4 @@
-export default `
-import ProductRepository from "../repository/product.repository";
+export default `import ProductRepository from "../repository/product.repository";
 
 export default class ProductService {
 	constructor(private readonly productRepository: ProductRepository) {}
