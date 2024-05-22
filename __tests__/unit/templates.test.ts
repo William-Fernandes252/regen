@@ -1,5 +1,4 @@
 import templates from "@/templates";
-import { capitalize } from "@/utils/strings";
 import { template } from "@/utils/tags";
 import {
 	factoryTemplateMock,
@@ -38,9 +37,13 @@ describe("Code generation", () => {
 
 		expect(result).toEqual(expected);
 		expect(result?.body).toContain(
-			`import ${capitalize(
-				resource,
-			)}Repository from "../repository/${resource}.repository";`,
+			template`import ${{
+				value: resource,
+				casing: "pascal",
+			}}Repository from "../repository/${{
+				value: resource,
+				casing: "kebab",
+			}}.repository";`,
 		);
 		expect(result?.body).toContain(`export default class ${result?.name}`);
 	});
