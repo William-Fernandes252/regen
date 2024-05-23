@@ -1,5 +1,4 @@
-export default `
-export default class ProductRepository {
+export default `export default class ProductRepository {
 	constructor() {}
 
 	async create(data: any) {

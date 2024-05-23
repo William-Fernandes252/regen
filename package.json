@@ -2,10 +2,13 @@
 	"name": "@williamfernandes/regen",
 	"version": "0.1.0",
 	"description": "Generate the skeleton (service, repository and factory) for an application resource.",
-	"main": "index.ts",
+	"main": "./dist/index.js",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": ["dist"],
 	"type": "module",
 	"bin": {
-		"regen": "./dist/src/index.js"
+		"regen": "./dist/index.js"
 	},
 	"scripts": {
 		"build": "tsup",

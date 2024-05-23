@@ -1,5 +1,5 @@
 import templates from "@/templates";
-import { capitalize } from "@/utils/strings";
+import { template } from "@/utils/tags";
 import {
 	factoryTemplateMock,
 	repositoryTemplateMock,
@@ -14,58 +14,68 @@ describe("Code generation", () => {
 	});
 
 	it("should generate a repository template", () => {
-		const expected = {
-			filename: `${resource}.repository.ts`,
-			template: repositoryTemplateMock,
-			class: `${[resource.charAt(0).toUpperCase(), resource.slice(1)].join(
-				"",
-			)}Repository`,
+		const expected: Component = {
+			filename: template`${{ value: resource, casing: "kebab" }}.repository.ts`,
+			body: repositoryTemplateMock,
+			name: template`${{ value: resource, casing: "pascal" }}Repository`,
 		};
 
 		const result = templates.get("repository")?.(resource);
 
 		expect(result).toEqual(expected);
-		expect(result?.template).toContain(`export default class ${result?.class}`);
+		expect(result?.body).toContain(`export default class ${result?.name}`);
 	});
 
 	it("should generate a service template", () => {
-		const expected = {
-			filename: `${resource}.service.ts`,
-			template: serviceTemplateMock,
-			class: `${capitalize(resource)}Service`,
+		const expected: Component = {
+			filename: template`${{ value: resource, casing: "kebab" }}.service.ts`,
+			body: serviceTemplateMock,
+			name: template`${{ value: resource, casing: "pascal" }}Service`,
 		};
 
 		const result = templates.get("service")?.(resource);
 
 		expect(result).toEqual(expected);
-		expect(result?.template).toContain(
-			`import ${capitalize(
-				resource,
-			)}Repository from "../repository/${resource}.repository";`,
+		expect(result?.body).toContain(
+			template`import ${{
+				value: resource,
+				casing: "pascal",
+			}}Repository from "../repository/${{
+				value: resource,
+				casing: "kebab",
+			}}.repository";`,
 		);
-		expect(result?.template).toContain(`export default class ${result?.class}`);
+		expect(result?.body).toContain(`export default class ${result?.name}`);
 	});
 
 	it("should generate a factory template", () => {
-		const expected = {
-			filename: `${resource}.factory.ts`,
-			template: factoryTemplateMock,
-			class: `${capitalize(resource)}Factory`,
+		const expected: Component = {
+			filename: template`${{ value: resource, casing: "kebab" }}.factory.ts`,
+			body: factoryTemplateMock,
+			name: template`${{ value: resource, casing: "pascal" }}Factory`,
 		};
 
 		const result = templates.get("factory")?.(resource);
 
 		expect(result).toEqual(expected);
-		expect(result?.template).toContain(
-			`import ${capitalize(
-				resource,
-			)}Repository from "../repository/${resource}.repository";`,
+		expect(result?.body).toContain(
+			template`import ${{
+				value: resource,
+				casing: "pascal",
+			}}Repository from "../repository/${{
+				value: resource,
+				casing: "kebab",
+			}}.repository";`,
 		);
-		expect(result?.template).toContain(
-			`import ${capitalize(
-				resource,
-			)}Service from "../service/${resource}.service";`,
+		expect(result?.body).toContain(
+			template`import ${{
+				value: resource,
+				casing: "pascal",
+			}}Service from "../service/${{
+				value: resource,
+				casing: "kebab",
+			}}.service";`,
 		);
-		expect(result?.template).toContain(`export default class ${result?.class}`);
+		expect(result?.body).toContain(`export default class ${result?.name}`);
 	});
 });

@@ -18,17 +18,18 @@ export async function createFiles(
 ) {
 	const keys = [...templates.keys()];
 	const promises: ReturnType<(typeof fsPromises)["writeFile"]>[] = [];
+
 	for (const layer of layers) {
-		const generateComponent = templates.get(
+		const component = templates.get(
 			keys.find((key) => key.includes(layer)) || "",
 		);
-		if (!generateComponent) {
+		if (!component) {
 			return { error: `Template for layer "${layer}" not found.` };
 		}
 
 		const folderPath = `${basePath}/${defaultMainDirectory}/${layer}`;
-		const { filename, template } = generateComponent(resource);
-		promises.push(fsPromises.writeFile(`${folderPath}/${filename}`, template));
+		const { filename, body } = component(resource);
+		promises.push(fsPromises.writeFile(`${folderPath}/${filename}`, body));
 	}
 
 	try {

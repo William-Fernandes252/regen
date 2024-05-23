@@ -1,17 +1,33 @@
-import { capitalize, uncapitalize } from "@/utils/strings";
+import { template } from "@/utils/tags";
 
-const resourceAnchor = "$$resource";
+function body(resource: string) {
+	return template`import ${{
+		value: resource,
+		casing: "pascal",
+	}}Repository from "../repository/${{ value: resource, casing: "kebab" }}.repository";
+import ${{ value: resource, casing: "pascal" }}Service from "../service/${{
+		value: resource,
+		casing: "kebab",
+	}}.service";
 
-const template = `
-import ${resourceAnchor}Repository from "../repository/${resourceAnchor}|lower.repository";
-import ${resourceAnchor}Service from "../service/${resourceAnchor}|lower.service";
-
-export default class ${resourceAnchor}Factory {
+export default class ${{ value: resource, casing: "pascal" }}Factory {
   static getInstance() {
-    return new ${resourceAnchor}Service(new ${resourceAnchor}Repository());
+    return new ${{ value: resource, casing: "pascal" }}Service(new ${{
+			value: resource,
+			casing: "pascal",
+		}}Repository());
   }
 }
 `;
+}
+
+function filename(resource: string) {
+	return template`${{ value: resource, casing: "kebab" }}.factory.ts`;
+}
+
+function name(resource: string) {
+	return template`${{ value: resource, casing: "pascal" }}Factory`;
+}
 
 /**
  * Generates a factory component for a resource.
@@ -19,12 +35,10 @@ export default class ${resourceAnchor}Factory {
  * @param resource The name of the resource.
  * @returns The factory component.
  */
-export function generateFactory(resource: string): Component {
+export function component(resource: string): Component {
 	return {
-		class: `${capitalize(resource)}Factory`,
-		filename: `${resource}.factory.ts`,
-		template: template
-			.replaceAll(`${resourceAnchor}|lower`, uncapitalize(resource))
-			.replaceAll(resourceAnchor, `${capitalize(resource)}`),
+		name: name(resource),
+		filename: filename(resource),
+		body: body(resource),
 	};
 }
