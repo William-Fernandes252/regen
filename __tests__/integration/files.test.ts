@@ -5,7 +5,7 @@ import { defaultLayers } from "@/constants";
 import { createFiles } from "@/files";
 import { createLayersIfNotExists } from "@/layers";
 
-describe("Layers folders structure", () => {
+describe("Files structure", () => {
 	function getFilePathForLayer(
 		basePath: string,
 		mainFolder: string,

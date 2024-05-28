@@ -24,7 +24,8 @@ describe("Files structure", () => {
 
 	it("should not create a file structure on inexistent layers", async () => {
 		const expected = {
-			error: `Template for layer "infrastructure" not found.`,
+			message: `Template for layer "infrastructure" not found.`,
+			success: false,
 		};
 		const result = await createFiles(
 			"",
@@ -67,7 +68,8 @@ describe("Files structure", () => {
 		jest.spyOn(fsPromises, "writeFile").mockRejectedValue(error);
 
 		const expected = {
-			error: error.message,
+			message: error.message,
+			success: false,
 		};
 
 		const result = await createFiles("", "src", ["repository"], resource);

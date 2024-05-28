@@ -21,8 +21,11 @@ export default class ${{ value: resource, casing: "pascal" }}Factory {
 `;
 }
 
-function filename(resource: string) {
-	return template`${{ value: resource, casing: "kebab" }}.factory.ts`;
+function filename(
+	resource: string,
+	casing: Extract<Template.Casing, "kebab" | "camel"> = "kebab",
+) {
+	return template`${{ value: resource, casing: casing }}.factory.ts`;
 }
 
 function name(resource: string) {

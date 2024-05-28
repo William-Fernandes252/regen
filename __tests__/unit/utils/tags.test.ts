@@ -12,7 +12,7 @@ describe("tags", () => {
 				["lower", "lower case"],
 				[undefined, "undefined case"],
 				[null, ""],
-			] as [Casing, string][]) {
+			] as [Template.Casing, string][]) {
 				const result = template`${{
 					value: expected ? `${casing} case` : null,
 					casing,
