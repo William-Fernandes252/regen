@@ -10,11 +10,15 @@ interface Component {
 	body: string;
 }
 
-type Casing = "camel" | "pascal" | "kebab" | "snake" | "upper" | "lower";
+declare namespace Template {
+	type Casing = "camel" | "pascal" | "kebab" | "snake" | "upper" | "lower";
 
-type Value = object | string | number | boolean | null | undefined;
+	type Value = object | string | number | boolean | null | undefined;
 
-type Placeholder = {
-	value: Value;
-	casing?: Casing;
-};
+	type Placeholder = {
+		value: Value;
+		casing?: Casing;
+	};
+}
+
+type Layer = "service" | "repository" | "factory";

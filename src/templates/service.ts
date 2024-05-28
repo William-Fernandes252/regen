@@ -37,7 +37,10 @@ export default class ${{ value: resource, casing: "pascal" }}Service {
 `;
 }
 
-function filename(resource: string, casing: "kebab" | "snake" = "kebab") {
+function filename(
+	resource: string,
+	casing: Extract<Template.Casing, "kebab" | "camel"> = "kebab",
+) {
 	return template`${{
 		value: resource,
 		casing: casing,

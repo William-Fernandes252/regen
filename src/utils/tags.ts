@@ -10,7 +10,7 @@
  */
 export function template(
 	strings: TemplateStringsArray,
-	...placeholders: Placeholder[]
+	...placeholders: Template.Placeholder[]
 ): string {
 	const result = [strings[0]];
 	placeholders.forEach((placeholder, i) => {

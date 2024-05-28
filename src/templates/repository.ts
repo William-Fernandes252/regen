@@ -23,7 +23,7 @@ function body(resource: string) {
 `;
 }
 
-function filename(resource: string, casing: Casing = "kebab") {
+function filename(resource: string, casing: Template.Casing = "kebab") {
 	return template`${{ value: resource, casing: casing }}.repository.ts`;
 }
 
