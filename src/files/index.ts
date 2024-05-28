@@ -24,7 +24,10 @@ export async function createFiles(
 			keys.find((key) => key.includes(layer)) || "",
 		);
 		if (!component) {
-			return { error: `Template for layer "${layer}" not found.` };
+			return {
+				success: false,
+				message: `Template for layer "${layer}" not found.`,
+			};
 		}
 
 		const folderPath = `${basePath}/${defaultMainDirectory}/${layer}`;
@@ -35,7 +38,7 @@ export async function createFiles(
 	try {
 		await Promise.all(promises);
 	} catch (error) {
-		return { error: (error as Error).message };
+		return { success: false, message: (error as Error).message };
 	}
 
 	return { success: true };
