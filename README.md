@@ -92,12 +92,20 @@ Scaffold a new resource in your project.
 
 ```bash
 Options:
-      --help      Show help                                            [boolean]
-      --version   Show version number                                  [boolean]
-  -r, --resource  The name of the resource to scaffold        [array] [required]
+      --help        Show help                                          [boolean]
+      --version     Show version number                                [boolean]
+  -r, --resource    The name of the resource to scaffold   [array] [default: []]
+  -s, --service     The name of the service to scaffold    [array] [default: []]
+  -p, --repository  The name of the repository to scaffold [array] [default: []]
+  -b, --base-dir    The base directory for the project    [string] [default: ""]
+  -m, --main-dir    The main directory for the project [string] [default: "src"]
 
 Examples:
   scaffold -r product          Scaffold a project with a single "product" domain
   scaffold -r product -r user  Scaffold a project with two domains: "product" an
                                d "user"
+  scaffold -s product          Scaffold a project with a single "product" servic
+                               e
+
+For more information, visit the documentation.
 ```

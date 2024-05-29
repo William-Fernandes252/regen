@@ -8,11 +8,15 @@ import { basePath, defaultLayers } from "../constants";
  * @property {Array} resource The name of the resource to scaffold
  * @property {Array} service The name of the service to scaffold
  * @property {Array} repository The name of the repository to scaffold
+ * @property {string} baseDir The base directory for the project
+ * @property {string} mainDir The main directory for the project
  */
 type A = {
 	resource: string[];
 	service: string[];
 	repository: string[];
+	"base-dir": string;
+	"main-dir": string;
 };
 
 const command = "scaffold";
@@ -40,6 +44,18 @@ const builder = (yargs: yargs.Argv) =>
 			description: "The name of the repository to scaffold",
 			default: [],
 		})
+		.option("base-dir", {
+			alias: "b",
+			type: "string",
+			description: "The base directory for the project",
+			default: basePath,
+		})
+		.option("main-dir", {
+			alias: "m",
+			type: "string",
+			description: "The main directory for the project",
+			default: "src",
+		})
 		.example(
 			"scaffold -r product",
 			'Scaffold a project with a single "product" domain',
@@ -57,19 +73,28 @@ const builder = (yargs: yargs.Argv) =>
 const handler = async (args: yargs.ArgumentsCamelCase<A>): Promise<void> => {
 	const defaultMainDirectory = await getDefaultMainDirectory();
 
-	await createLayersIfNotExists(basePath, defaultMainDirectory, defaultLayers);
+	await createLayersIfNotExists(
+		args["base-dir"],
+		args["main-dir"],
+		defaultLayers,
+	);
 
 	const results = await Promise.all([
 		...args.resource.map(async (resource) => {
 			return createFiles(
-				basePath,
-				defaultMainDirectory,
+				args["base-dir"],
+				args["main-dir"],
 				defaultLayers,
 				resource,
 			);
 		}),
 		...args.service.map(async (service) => {
-			return createFiles(basePath, defaultMainDirectory, ["service"], service);
+			return createFiles(
+				args["base-dir"],
+				args["main-dir"],
+				["service"],
+				service,
+			);
 		}),
 	]);
 
