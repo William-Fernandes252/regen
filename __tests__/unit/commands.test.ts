@@ -42,7 +42,7 @@ describe("Scaffold command", () => {
 				.mockResolvedValue({ success: true });
 		});
 
-		it("should scaffold a new resource", async () => {
+		it("should scaffold a new resource in the default main directory", async () => {
 			await new Promise((resolve, reject) => {
 				parser.parse(
 					`scaffold ${resources.map((resource) => `-r ${resource}`).join(" ")}`,
@@ -64,6 +64,40 @@ describe("Scaffold command", () => {
 				expect(createFilesSpy).toHaveBeenCalledWith(
 					process.cwd(),
 					defaultMainDirectory,
+					defaultLayers,
+					resource,
+				);
+			}
+		});
+
+		it("should scaffold a new resource in the user defined main directory", async () => {
+			const customMainDirectory = "src/app";
+			const customBaseDirectory = "/home/user/projects/my-app";
+
+			await new Promise((resolve, reject) => {
+				parser.parse(
+					`scaffold -m ${customMainDirectory} -b ${customBaseDirectory} ${resources
+						.map((resource) => `-r ${resource}`)
+						.join(" ")}`,
+					{},
+					(error, _, output) => {
+						if (error) {
+							reject(error);
+						}
+						resolve(output);
+					},
+				);
+			});
+
+			expect(createLayersSpy).toHaveBeenCalledWith(
+				customBaseDirectory,
+				customMainDirectory,
+				defaultLayers,
+			);
+			for (const resource of resources) {
+				expect(createFilesSpy).toHaveBeenCalledWith(
+					customBaseDirectory,
+					customMainDirectory,
 					defaultLayers,
 					resource,
 				);
