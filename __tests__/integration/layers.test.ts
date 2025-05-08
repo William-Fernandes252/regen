@@ -1,13 +1,13 @@
 import fsPromises from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { defaultLayers } from "@/constants";
+import { basePath as defaultBasePath, defaultLayers } from "@/constants";
 import { createLayersIfNotExists } from "@/layers";
 
 describe("Layers folders structure", () => {
 	const defaultMainDirectory = "src";
 
-	let basePath: string;
+	let basePath: string = defaultBasePath;
 
 	async function getFolders(...paths: string[]) {
 		return await fsPromises.readdir(join(...paths));
