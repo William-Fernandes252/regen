@@ -1,7 +1,8 @@
+import { Kebab, Pascal } from "@/utils/formats";
 import { template } from "@/utils/tags";
 
 function body(resource: string) {
-	return template`export default class ${{ value: resource, casing: "pascal" }}Repository {
+	return template`export default class ${new Pascal(resource)}Repository {
 	constructor() {}
 
 	async create(data: any) {
@@ -23,12 +24,12 @@ function body(resource: string) {
 `;
 }
 
-function filename(resource: string, casing: Template.Casing = "kebab") {
-	return template`${{ value: resource, casing: casing }}.repository.ts`;
+function filename(resource: string) {
+	return template`${new Kebab(resource)}.repository.ts`;
 }
 
 function name(resource: string) {
-	return template`${{ value: resource, casing: "pascal" }}Repository`;
+	return template`${new Pascal(resource)}Repository`;
 }
 
 /**
@@ -39,8 +40,8 @@ function name(resource: string) {
  */
 export function component(resource: string): Component {
 	return {
-		name: name(resource),
-		filename: filename(resource),
-		body: body(resource),
+		name: name(resource).render(),
+		filename: filename(resource).render(),
+		body: body(resource).render(),
 	};
 }
