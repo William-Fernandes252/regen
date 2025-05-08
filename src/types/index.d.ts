@@ -1,9 +1,3 @@
-/**
- * @interface Component
- * @property {string} class - The class name of the component.
- * @property {string} filename - The filename of the component.
- * @property {string} template - The template of the component.
- */
 interface Component {
 	name: string;
 	filename: string;
@@ -11,14 +5,28 @@ interface Component {
 }
 
 declare namespace Template {
-	type Casing = "camel" | "pascal" | "kebab" | "snake" | "upper" | "lower";
+	type Value = string | number | boolean | null | undefined;
 
-	type Value = object | string | number | boolean | null | undefined;
+	interface Result {
+		/**
+		 * Call the `render` method to get the resulting template.
+		 */
+		(): string;
 
-	type Placeholder = {
-		value: Value;
-		casing?: Casing;
-	};
+		/**
+		 * Render the template with the given placeholders.
+		 */
+		render(): string;
+
+		/**
+		 * Compose the template with the given function.
+		 *
+		 * This function will be called with the rendered template as input.
+		 *
+		 * @template U - The type of the result of the next function.
+		 */
+		compose<U>(next: (input: string) => U): Result & { thenRender: () => U };
+	}
 }
 
 type Layer = "service" | "repository" | "factory";

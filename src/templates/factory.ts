@@ -1,35 +1,26 @@
+import { Kebab, Pascal } from "@/utils/formats";
 import { template } from "@/utils/tags";
 
 function body(resource: string) {
-	return template`import ${{
-		value: resource,
-		casing: "pascal",
-	}}Repository from "../repository/${{ value: resource, casing: "kebab" }}.repository";
-import ${{ value: resource, casing: "pascal" }}Service from "../service/${{
-		value: resource,
-		casing: "kebab",
-	}}.service";
+	return template`import ${new Pascal(
+		resource,
+	)}Repository from "../repository/${new Kebab(resource)}.repository";
+import ${new Pascal(resource)}Service from "../service/${new Kebab(resource)}.service";
 
-export default class ${{ value: resource, casing: "pascal" }}Factory {
+export default class ${new Pascal(resource)}Factory {
   static getInstance() {
-    return new ${{ value: resource, casing: "pascal" }}Service(new ${{
-			value: resource,
-			casing: "pascal",
-		}}Repository());
+    return new ${new Pascal(resource)}Service(new ${new Pascal(resource)}Repository());
   }
 }
 `;
 }
 
-function filename(
-	resource: string,
-	casing: Extract<Template.Casing, "kebab" | "camel"> = "kebab",
-) {
-	return template`${{ value: resource, casing: casing }}.factory.ts`;
+function filename(resource: string) {
+	return template`${new Kebab(resource)}.factory.ts`;
 }
 
 function name(resource: string) {
-	return template`${{ value: resource, casing: "pascal" }}Factory`;
+	return template`${new Pascal(resource)}Factory`;
 }
 
 /**
@@ -40,8 +31,8 @@ function name(resource: string) {
  */
 export function component(resource: string): Component {
 	return {
-		name: name(resource),
-		filename: filename(resource),
-		body: body(resource),
+		name: name(resource).render(),
+		filename: filename(resource).render(),
+		body: body(resource).render(),
 	};
 }
